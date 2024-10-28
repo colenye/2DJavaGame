@@ -35,6 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         double drawInterval = (1d/FPS) / 1000;
         double nextDrawTime = System.currentTimeMillis();
+        long timer = 0;
+        int drawCount = 0;
         while(thread != null){
             update();
             repaint();
@@ -49,6 +51,9 @@ public class GamePanel extends JPanel implements Runnable {
                 throw new RuntimeException(e);
             }
             nextDrawTime += drawInterval * 1000000;
+            timer += (long) (remainingTime + System.currentTimeMillis());
+            drawCount++;
+
 
         }
     }
