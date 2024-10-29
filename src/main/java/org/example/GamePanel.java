@@ -2,6 +2,7 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -16,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     int playerY = 50;
     int playerSpeed = 41;
 
-    final int FPS = 60;
+    final int FPS = 5;
     public GamePanel() {
         this.setPreferredSize(new Dimension(800, 600));
         this.setDoubleBuffered(true);
@@ -33,28 +34,24 @@ public class GamePanel extends JPanel implements Runnable {
     }
     @Override
     public void run() {
-        double drawInterval = (1d/FPS) / 1000;
-        double nextDrawTime = System.currentTimeMillis();
-        long timer = 0;
-        int drawCount = 0;
+        double drawInterval = 1000000000d / FPS;
+        double delta = 1;
+        long lastTime = System.nanoTime();
+        long currentTime;
         while(thread != null){
-            update();
-            repaint();
 
-            double remainingTime = nextDrawTime - System.currentTimeMillis();
-            if (remainingTime < 0){
-                remainingTime = 0;
+            currentTime = System.nanoTime();
+
+            delta += (currentTime - lastTime);
+
+            lastTime = currentTime;
+
+
+            if(delta >= 1000000000d / FPS) {
+                update();
+                repaint();
+                delta=0;
             }
-            try {
-                Thread.sleep((long) remainingTime);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            nextDrawTime += drawInterval * 1000000;
-            timer += (long) (remainingTime + System.currentTimeMillis());
-            drawCount++;
-
-
         }
     }
     public void update() {
