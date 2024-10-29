@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     int playerY = 50;
     int playerSpeed = 41;
 
-    final int FPS = 5;
+    final int FPS = 60;
     public GamePanel() {
         this.setPreferredSize(new Dimension(800, 600));
         this.setDoubleBuffered(true);
@@ -34,7 +34,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
     @Override
     public void run() {
-        double drawInterval = 1000000000d / FPS;
         double delta = 1;
         long lastTime = System.nanoTime();
         long currentTime;
