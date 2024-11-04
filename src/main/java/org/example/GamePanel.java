@@ -8,7 +8,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     final int originalTileSize = 16;
     final int scale = 16;
-
+//
     final int tileSize = originalTileSize * scale;
 
     KeyHandler keyHandler = new KeyHandler();
